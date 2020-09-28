@@ -58,7 +58,7 @@ export default function AgreementForm({
           textAlign: 'center',
         }}
       >
-        Create an Arbitration Agreement
+        <h2> Create an Arbitration Agreement</h2>
       </div>
 
       {agreementSubmit ? (

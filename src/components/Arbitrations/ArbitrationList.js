@@ -14,6 +14,7 @@ import {
 } from '@aragon/ui';
 
 import AgreementForm from './modals/AgreementForm';
+import ProcedureForm from './modals/ProcedureForm';
 
 import { fetchAgreement } from '../../lib/contracts/Agreement.js';
 import { useAccount } from '../../wallet/Account.js';
@@ -32,8 +33,11 @@ function ArbitrationList({ disputes, arbitrations, selectDispute }) {
   const theme = useTheme();
   const [selected, setSelected] = useState(0);
   const [agreementModal, setAgreementModal] = useState(false);
+  const [procedureModal, setProcedureModal] = useState(false);
 
   const openAgreement = () => setAgreementModal(true);
+
+  const openProcedure = () => setProcedureModal(true);
   const walletAccount = useAccount();
 
   const agreementDetails = fetchAgreement(
@@ -58,7 +62,30 @@ function ArbitrationList({ disputes, arbitrations, selectDispute }) {
           node={NODES[selected]}
         />
         <div />
+        {/* procedure modal */}
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}
+        >
+          <ProcedureForm
+            procedureModal={procedureModal}
+            setProcedureModal={setProcedureModal}
+          />
+        </div>
+
         <div style={{ display: 'flex', marginTop: '1rem' }}>
+          <div style={{ marginLeft: '0.5rem' }}>
+            <Button
+              label='+NEW PROCEDURE'
+              onClick={() => {
+                openProcedure();
+              }}
+            />
+          </div>
+
           <div style={{ marginLeft: '0.5rem', marginRight: '0.25rem' }}>
             <Button
               label='+NEW AGREEMENT'
@@ -89,7 +116,7 @@ function ArbitrationList({ disputes, arbitrations, selectDispute }) {
       </div>
 
       <Tabs
-        items={['All requests', 'My claims']}
+        items={['All requests', 'My claims', 'Agreement Details']}
         selected={selected}
         onChange={setSelected}
       />
